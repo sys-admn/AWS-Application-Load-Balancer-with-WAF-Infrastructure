@@ -11,14 +11,14 @@ terraform {
       version = ">= 3.5.1"
     }
   }
- /* 
+ 
   backend "s3" {
     bucket         = "terraform-state-bucket-alb-waf"
     key            = "alb-waf/terraform.tfstate"
     region         = "eu-west-3"
     dynamodb_table = "terraform-locks"
     encrypt        = true
-  }*/
+  }
 }
 
 provider "aws" {
@@ -48,7 +48,7 @@ provider "aws" {
       Application  = "ALB-WAF-Demo"
       Tier         = var.environment == "Production" ? "Production" : "Non-Production"
       CreatedBy    = "Terraform"
-      CreatedDate  = "2025-05-05"
+      CreatedDate  = formatdate("DD MMM YYYY hh:mm ZZZ", timestamp())
     }
   }
 }
