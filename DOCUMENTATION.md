@@ -28,7 +28,7 @@ This project implements a secure, scalable, and monitored web application infras
 
 ## Architecture
 
-![Architecture Diagram](../assets/Development%20eu-west-3.png)
+![Architecture Diagram](/assets/Development%20eu-west-3.png)
 
 The infrastructure consists of four main layers:
 
