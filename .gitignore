@@ -1,0 +1,113 @@
+# Terraform files
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfstate.*.backup
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+.terraformrc
+terraform.rc
+.terraform.d/
+#infracost files
+.infracost
+# Local .terraform directories
+**/.terraform/*
+
+# Terraform plan output files
+tfplan
+*.tfplan
+plan.out
+plan.json
+
+# Sensitive variable files
+*.auto.tfvars
+*.auto.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*secrets*.tfvars
+*secrets*.tf
+
+# SSH Keys
+*.pem
+*.ppk
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+*.key
+
+# Credentials
+.aws/
+aws.json
+credentials.json
+*credentials*
+.env
+*.env
+.envrc
+.credentials
+
+# Logs
+*.log
+logs/
+waf-logs.josn
+*-logs.json
+*-logs.txt
+
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*.swp
+*.old
+tmp/
+temp/
+
+# Package files
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Sensitive documentation
+*private-notes*
+*credentials*
+*password*
+*secret*
+
+# Terraform backend configuration that might contain sensitive info
+backend.tf
+backend.hcl
+
+# Ignore any file with "DO-NOT-COMMIT" in the name
+*DO-NOT-COMMIT*
