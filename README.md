@@ -12,7 +12,7 @@ This Terraform project deploys a comprehensive AWS infrastructure featuring:
 
 ## 📋 Architecture Overview
 
-![Architecture Diagram](../assets/Development%20eu-west-3.png)
+![Architecture Diagram](/assets/Development%20eu-west-3.png)
 
 The infrastructure consists of:
 
