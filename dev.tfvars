@@ -48,7 +48,7 @@ ami_name_filter             = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-se
 
 # CloudWatch settings
 dashboard_name              = "Dev-ALB-WAF-EC2-Dashboard"
-sns_topic_arn               = "arn:aws:sns:eu-west-3:ACCOUNT_ID:sns-dev"  # Replace with your actual SNS topic ARN
+sns_topic_arn               = "arn:aws:sns:eu-west-3:234747448884:sns-dev"
 alarm_evaluation_periods    = 1
 alarm_period                = 60
 enable_ok_actions           = false

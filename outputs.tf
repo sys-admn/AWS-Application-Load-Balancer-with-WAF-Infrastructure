@@ -1,23 +1,3 @@
-# VPC outputs
-output "vpc_id" {
-  description = "The ID of the VPC"
-  value       = module.vpc.vpc_id
-}
-
-output "vpc_cidr_block" {
-  description = "The CIDR block of the VPC"
-  value       = module.vpc.vpc_cidr_block
-}
-
-output "public_subnets" {
-  description = "List of IDs of public subnets"
-  value       = module.vpc.public_subnets
-}
-
-output "private_subnets" {
-  description = "List of IDs of private subnets"
-  value       = module.vpc.private_subnets
-}
 
 # Flow Logs outputs
 output "flow_logs_group_name" {
@@ -47,30 +27,9 @@ output "alb_arn" {
 }
 
 # WAF outputs
-output "waf_id" {
-  description = "The ID of the WAF Web ACL"
-  value       = module.waf.waf_id
-}
-
 output "waf_arn" {
   description = "The ARN of the WAF Web ACL"
   value       = module.waf.waf_arn
-}
-
-# EC2 outputs
-output "web_instance_ids" {
-  description = "List of IDs of web server instances"
-  value       = module.ec2.instance_ids
-}
-
-output "bastion_public_ip" {
-  description = "Public IP address of the bastion host"
-  value       = module.ec2.bastion_public_ip
-}
-
-output "bastion_private_ip" {
-  description = "Private IP address of the bastion host"
-  value       = module.ec2.bastion_private_ip
 }
 
 output "autoscaling_group_name" {

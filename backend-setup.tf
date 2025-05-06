@@ -1,4 +1,4 @@
-provider "aws" {
+/*provider "aws" {
   alias  = "backend"
   region = "eu-west-3"
 }
@@ -58,4 +58,4 @@ output "s3_bucket_name" {
 
 output "dynamodb_table_name" {
   value = aws_dynamodb_table.terraform_locks.name
-}
+}*/

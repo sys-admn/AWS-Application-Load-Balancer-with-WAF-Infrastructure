@@ -105,6 +105,19 @@ terraform apply -var-file="dev.tfvars"
 
 ### Production Environment
 
+#### Pre-deployment Steps
+
+Before deploying to production, you need to create the CloudWatch Log Group for VPC Flow Logs:
+
+```bash
+# Create the CloudWatch Log Group for VPC Flow Logs
+aws logs create-log-group --log-group-name "/aws/vpc/prod-flow-logs" --region eu-west-3
+```
+
+This is necessary because the module is configured to use an existing log group in production.
+
+#### Deployment
+
 ```bash
 # Select the production workspace
 terraform workspace select prod
@@ -127,6 +140,23 @@ terraform destroy -var-file="dev.tfvars"
 terraform workspace select prod
 terraform destroy -var-file="prod.tfvars"
 ```
+
+## 🔧 Common Issues and Solutions
+
+### 1. Missing CloudWatch Log Group for Flow Logs
+
+**Error:**
+```
+Error: reading CloudWatch Logs Log Group (/aws/vpc/prod-flow-logs): empty result
+```
+
+**Solution:**
+Create the CloudWatch Log Group manually before applying Terraform:
+```bash
+aws logs create-log-group --log-group-name "/aws/vpc/prod-flow-logs" --region eu-west-3
+```
+
+This is required because the Flow Logs module is configured to use existing log groups in production environments.
 
 ## 🔒 Security Features
 
@@ -210,23 +240,6 @@ Edit the `.tfvars` files to customize:
 - Monitoring thresholds
 - Log retention policies
 - Flow Logs configuration
-
-### Important Configuration Notes
-
-When setting up your environment, you'll need to configure:
-
-1. **SNS Topic for Alerts**: 
-   - Create an SNS topic in your AWS account
-   - Update the `sns_topic_arn` variable in your tfvars files with your SNS topic ARN
-   - Example format: `arn:aws:sns:REGION:ACCOUNT_ID:TOPIC_NAME`
-
-2. **SSL Certificate for HTTPS (Production)**:
-   - For production, create or import an SSL certificate in AWS Certificate Manager
-   - Update the `certificate_arn` variable in prod.tfvars with your certificate ARN
-
-3. **IP Restrictions**:
-   - Update `bastion_allowed_ips` with your organization's IP addresses
-   - Update `waf_blocked_ips` with any IPs you want to block
 
 ## 🔗 Useful Links
 

@@ -309,6 +309,26 @@ The production environment (`prod.tfvars`) is configured for:
 
 ## Troubleshooting
 
+### Common Issues
+
+1. **Missing CloudWatch Log Group for Flow Logs**
+
+   **Error:**
+   ```
+   Error: reading CloudWatch Logs Log Group (/aws/vpc/prod-flow-logs): empty result
+   ```
+
+   **Cause:**
+   This error occurs when the Flow Logs module is configured to use an existing CloudWatch Log Group (`use_existing_log_group = true`), but the log group doesn't exist yet.
+
+   **Solution:**
+   Create the CloudWatch Log Group manually before applying Terraform:
+   ```bash
+   aws logs create-log-group --log-group-name "/aws/vpc/prod-flow-logs" --region eu-west-3
+   ```
+
+   This is particularly important for the production environment where the module is configured to use existing log groups.
+
 ### Debugging Tools
 
 1. **CloudWatch Logs Insights**:

@@ -7,7 +7,7 @@ environment = "Production"
 project     = "ALB-WAF-Demo"
 
 # VPC settings
-vpc_cidr_block              = "10.0.0.0/16"
+vpc_cidr_block              = "11.0.0.0/16"
 public_subnet_count         = 3
 private_subnet_count        = 3
 availability_zones          = ["eu-west-3a", "eu-west-3b", "eu-west-3c"]
@@ -20,8 +20,8 @@ bastion_allowed_ips         = ["78.112.57.78/32"]  # Replace with your actual IP
 
 # ALB settings
 alb_name                    = "prod-alb"
-enable_https                = true
-certificate_arn             = "arn:aws:acm:eu-west-3:ACCOUNT_ID:certificate/example"  # Replace with your actual certificate ARN
+enable_https                = false # Désactiver HTTPS temporairement
+certificate_arn             = "arn:aws:acm:eu-west-3:234747448884:certificate/example"  # Replace with your actual certificate ARN
 enable_deletion_protection  = true
 # Le bucket sera créé automatiquement, ne pas spécifier de nom ici
 access_logs_bucket          = ""
@@ -51,7 +51,7 @@ ami_name_filter             = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-se
 
 # CloudWatch settings
 dashboard_name              = "Prod-ALB-WAF-EC2-Dashboard"
-sns_topic_arn               = "arn:aws:sns:eu-west-3:ACCOUNT_ID:sns-prod"  # Replace with your actual SNS topic ARN
+sns_topic_arn               = "arn:aws:sns:eu-west-3:234747448884:sns-prod"  # Replace with your actual SNS topic ARN
 alarm_evaluation_periods    = 2
 alarm_period                = 60
 
