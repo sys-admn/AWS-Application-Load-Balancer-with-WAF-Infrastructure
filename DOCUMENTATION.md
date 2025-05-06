@@ -11,6 +11,7 @@
 8. [Troubleshooting](#troubleshooting)
 9. [Best Practices](#best-practices)
 10. [Maintenance](#maintenance)
+11. [Testing and Simulation](#testing-and-simulation)
 
 ## Project Overview
 
@@ -283,13 +284,7 @@ Logs are managed with:
 
 When working with existing resources like CloudWatch Log Groups:
 
-1. **Delete Existing Resources**:
-   ```bash
-   terraform import module.flow_logs[0].data.aws_cloudwatch_log_group.existing_flow_logs[0] "/aws/vpc/dev-flow-logs"
-   ```
-
-2. **Use Existing Resources**:
-   Set `use_existing_log_group = true` in the module configuration to use existing log groups instead of creating new ones.
+Set `use_existing_log_group = true` in the module configuration to use existing log groups instead of creating new ones.
 
 ## Environment Configuration
 
@@ -313,27 +308,6 @@ The production environment (`prod.tfvars`) is configured for:
 - Stricter deletion protection
 
 ## Troubleshooting
-
-### Common Issues
-
-1. **CloudWatch Log Group Already Exists**:
-   - Error: `ResourceAlreadyExistsException: The specified log group already exists`
-   - Solution: Set `use_existing_log_group = true` in the flow_logs module
-
-2. **CloudWatch Agent Not Sending Logs**:
-   - Check agent status: `sudo systemctl status amazon-cloudwatch-agent`
-   - Check agent configuration: `/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json`
-   - Check IAM permissions for the instance
-
-3. **High CPU Usage Alarms**:
-   - Verify with `top` or `htop` on the instance
-   - Check CloudWatch metrics for the instance
-   - Review application logs for issues
-
-4. **WAF Blocking Legitimate Traffic**:
-   - Review WAF logs in CloudWatch
-   - Check WAF rules and adjust as needed
-   - Temporarily disable specific rules for testing
 
 ### Debugging Tools
 
@@ -390,6 +364,90 @@ The production environment (`prod.tfvars`) is configured for:
 - Plan for AWS service updates
 - Test Terraform version upgrades in development first
 - Document configuration changes
+
+## Testing and Simulation
+
+### CPU Load Testing
+
+To test auto-scaling and CloudWatch alarms, you can simulate high CPU usage on EC2 instances:
+
+#### Using the stress Tool
+
+1. **SSH into the EC2 instance** (via bastion host if needed):
+   ```bash
+   # Connect to bastion first
+   ssh -i your-key.pem ubuntu@<bastion-public-ip>
+   
+   # Then connect to the web server
+   ssh -i your-key.pem ubuntu@<web-server-private-ip>
+   ```
+
+2. **Install the stress tool**:
+   ```bash
+   sudo apt-get update
+   sudo apt-get install -y stress
+   ```
+
+3. **Generate high CPU load**:
+   ```bash
+   # Use all CPU cores at 100% for 5 minutes
+   stress --cpu $(nproc) --timeout 300s
+   ```
+
+4. **For more controlled testing**:
+   ```bash
+   # For approximately 80% CPU usage on a single core
+   stress --cpu 1 --timeout 300s &
+   sleep 1
+   pid=$!
+   cpulimit -p $pid -l 80
+   ```
+
+5. **Monitor CPU usage in real-time**:
+   ```bash
+   top
+   # or
+   htop  # If installed
+   ```
+
+#### Using a Simple Bash Loop
+
+If `stress` is not available, you can use this bash script:
+
+```bash
+#!/bin/bash
+# CPU stress test
+duration=300  # 5 minutes
+end=$((SECONDS+duration))
+
+echo "Starting CPU stress test for $duration seconds..."
+while [ $SECONDS -lt $end ]; do
+  # Create load by calculating prime numbers
+  for i in {1..10000}; do
+    echo "$i" | factor > /dev/null
+  done
+done
+echo "CPU stress test completed."
+```
+
+Save this as `cpu_stress.sh`, make it executable with `chmod +x cpu_stress.sh`, and run it with `./cpu_stress.sh`.
+
+#### Verifying the Test
+
+1. **Check CloudWatch Metrics**:
+   - Navigate to CloudWatch in the AWS Console
+   - View the CPU utilization metrics for the instance
+   - Verify that the alarm was triggered
+
+2. **Verify Auto Scaling**:
+   - Check if new instances were launched
+   - Review the Auto Scaling Group activity history
+
+3. **Review Notifications**:
+   - Check if SNS notifications were sent
+   - Verify that the appropriate teams were notified
+
+This testing helps ensure that your auto-scaling configuration and alerting systems work correctly before they're needed in a real high-load situation.
 
 ---
 
