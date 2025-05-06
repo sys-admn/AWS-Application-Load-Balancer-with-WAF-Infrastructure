@@ -211,6 +211,23 @@ Edit the `.tfvars` files to customize:
 - Log retention policies
 - Flow Logs configuration
 
+### Important Configuration Notes
+
+When setting up your environment, you'll need to configure:
+
+1. **SNS Topic for Alerts**: 
+   - Create an SNS topic in your AWS account
+   - Update the `sns_topic_arn` variable in your tfvars files with your SNS topic ARN
+   - Example format: `arn:aws:sns:REGION:ACCOUNT_ID:TOPIC_NAME`
+
+2. **SSL Certificate for HTTPS (Production)**:
+   - For production, create or import an SSL certificate in AWS Certificate Manager
+   - Update the `certificate_arn` variable in prod.tfvars with your certificate ARN
+
+3. **IP Restrictions**:
+   - Update `bastion_allowed_ips` with your organization's IP addresses
+   - Update `waf_blocked_ips` with any IPs you want to block
+
 ## 🔗 Useful Links
 
 - [AWS WAF Documentation](https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html)
