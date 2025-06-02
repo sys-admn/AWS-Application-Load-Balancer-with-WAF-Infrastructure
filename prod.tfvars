@@ -16,23 +16,23 @@ create_nat_gateway          = true
 single_nat_gateway          = false  # Use multiple NAT Gateways for high availability in prod
 
 # Security settings
-bastion_allowed_ips         = ["78.112.57.78/32"]  # Replace with your actual IP
+# bastion_allowed_ips is defined in secrets.tfvars
 
 # ALB settings
 alb_name                    = "prod-alb"
-enable_https                = false # FIXME
-certificate_arn             = "arn:aws:acm:us-east-1:234747448884:certificate/example"  # Replace with your actual certificate ARN
+enable_https                = false
+# certificate_arn is defined in secrets.tfvars
 enable_deletion_protection  = true
 # Le bucket sera créé automatiquement, ne pas spécifier de nom ici
 access_logs_bucket          = ""
 
 # WAF settings
-waf_blocked_ips             = ["46.193.64.43/32"]  # Example IPs to block
+# waf_blocked_ips is defined in secrets.tfvars
 enable_waf_core_rule_set    = true
 enable_waf_sql_injection_protection = true
 enable_waf_rate_limiting    = true
 enable_geo_restriction      = true
-allowed_country_codes       = ["FR"]  # FIXME
+allowed_country_codes       = ["FR"]
 
 # EC2 settings
 key_name                    = "key-mgnt-prod"
@@ -51,7 +51,7 @@ ami_name_filter             = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-se
 
 # CloudWatch settings
 dashboard_name              = "Prod-ALB-WAF-EC2-Dashboard"
-sns_topic_arn               = "arn:aws:sns:us-east-1:234747448884:sns-prod"   #FIXME Replace with your actual SNS topic ARN
+# sns_topic_arn is defined in secrets.tfvars
 alarm_evaluation_periods    = 2
 alarm_period                = 60
 

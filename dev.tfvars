@@ -16,7 +16,7 @@ create_nat_gateway          = true
 single_nat_gateway          = true  # Use single NAT Gateway for cost savings in dev
 
 # Security settings
-bastion_allowed_ips         = ["78.112.57.78/32"]  # FIXME Replace with your actual IP
+# bastion_allowed_ips is defined in secrets.tfvars
 
 # ALB settings
 alb_name                    = "dev-alb"
@@ -26,12 +26,12 @@ enable_deletion_protection  = false
 access_logs_bucket          = ""
 
 # WAF settings
-waf_blocked_ips             = ["46.193.64.43/32"]  # FIXME Example IPs to block
+# waf_blocked_ips is defined in secrets.tfvars
 enable_waf_core_rule_set    = true
 enable_waf_sql_injection_protection = true
 enable_waf_rate_limiting    = true
 enable_geo_restriction      = true  # Activé les restrictions géographiques
-allowed_country_codes       = ["FR"]  # FIXME
+allowed_country_codes       = ["FR"]
 
 # EC2 settings
 key_name                    = "key-mgnt-dev"
@@ -48,7 +48,7 @@ ami_name_filter             = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-se
 
 # CloudWatch settings
 dashboard_name              = "Dev-ALB-WAF-EC2-Dashboard"
-sns_topic_arn               = "arn:aws:sns:eu-west-3:234747448884:sns-dev" #FIXME
+# sns_topic_arn is defined in secrets.tfvars
 alarm_evaluation_periods    = 1
 alarm_period                = 60
 enable_ok_actions           = false
@@ -77,4 +77,4 @@ cloudwatch_log_retention_days = 30
 high_log_volume_threshold = 5000000  # 5MB
 
 # Flow Logs settings
-enable_flow_logs = true  # FIXME Désactivé temporairement pour éviter les conflits
+enable_flow_logs = true

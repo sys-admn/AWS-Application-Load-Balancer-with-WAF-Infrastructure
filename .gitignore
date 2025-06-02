@@ -111,3 +111,4 @@ backend.hcl
 
 # Ignore any file with "DO-NOT-COMMIT" in the name
 *DO-NOT-COMMIT*
+secrets.tfvars
